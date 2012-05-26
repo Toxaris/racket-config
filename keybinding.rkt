@@ -22,10 +22,12 @@
     (let* ([pos (send ed get-start-position)])
       (send ed begin-edit-sequence #f #f)
       (send ed insert "(" pos 'same #f)
-      (when (eq? (send ed classify-position pos) 'parenthesis)
+      (let ([convert (eq? (send ed classify-position pos) 'parenthesis)])
         (send ed delete pos (+ pos 1) #f)
-        ((call-function "maybe-insert-[]-pair-maybe-fixup-[]" #t) ed evt))
-      (send ed end-edit-sequence))))
+        (send ed end-edit-sequence)
+        (if convert
+            ((call-function "maybe-insert-[]-pair-maybe-fixup-[]" #t) ed evt)
+            (send ed insert "(" pos 'same #f))))))
 
 ; c:space
 ; start auto-completion
