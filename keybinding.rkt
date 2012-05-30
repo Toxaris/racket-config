@@ -4,16 +4,16 @@
 
 ; HELPERS
 
-(define (call-function name flag)
+(define-syntax-rule (call-function name flag)
   (lambda (ed evt)
     (send (send ed get-keymap) call-function name ed evt flag)))
 
 ; KEY BINDINGS
 
-; m:[
-; automatically choose between ( and [
+; [
+; insert [ or [] depending on preferences
 (keybinding "m:["
-  (call-function "maybe-insert-[]-pair-maybe-fixup-[]" #t))
+  (call-function "maybe-insert-[]-pair" #t))
 
 ; (
 ; automatically choose between ( and [
@@ -28,6 +28,11 @@
         (if convert
             ((call-function "maybe-insert-[]-pair-maybe-fixup-[]" #t) ed evt)
             (send ed insert "(" pos 'same #f))))))
+
+; c:(
+; insert ( or () depending on preferences
+(keybinding "c:("
+  (call-function "maybe-insert-()-pair" #t))
 
 ; c:space
 ; start auto-completion

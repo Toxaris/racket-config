@@ -12,7 +12,8 @@ the menu and select they `keybindings.rkt` file.
 Bindings
 --------
 
+  * `[` inserts &ldquo;[&rdquo;
   * `(` inserts &ldquo;(&rdquo; or &ldquo;[&rdquo; depending on context.
-  * `[` inserts &ldquo;(&rdquo; or &ldquo;[&rdquo; depending on context.
+  * `c:(` inserts &ldquo;(&rdquo;
   * `c:space` triggers auto-completion
 
