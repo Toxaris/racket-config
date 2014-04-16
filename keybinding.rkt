@@ -17,17 +17,20 @@
 
 ; (
 ; automatically choose between ( and [
+;   (if activated in preferences!)
 (keybinding "("
   (lambda (ed evt)
-    (let* ([pos (send ed get-start-position)])
-      (send ed begin-edit-sequence #f #f)
-      (send ed insert "(" pos 'same #f)
-      (let ([convert (eq? (send ed classify-position pos) 'parenthesis)])
-        (send ed delete pos (+ pos 1) #f)
-        (send ed end-edit-sequence)
-        (if convert
-            ((call-function "maybe-insert-[]-pair-maybe-fixup-[]" #t) ed evt)
-            (send ed insert "(" pos 'same #f))))))
+    (if (preferences:get 'framework:fixup-open-parens)
+        (let* ([pos (send ed get-start-position)])
+          (send ed begin-edit-sequence #f #f)
+          (send ed insert "(" pos 'same #f)
+          (let ([convert (eq? (send ed classify-position pos) 'parenthesis)])
+            (send ed delete pos (+ pos 1) #f)
+            (send ed end-edit-sequence)
+            (if convert
+                ((call-function "maybe-insert-[]-pair-maybe-fixup-[]" #t) ed evt)
+                (send ed insert "(" pos 'same #f))))
+        ((call-function "maybe-insert-()-pair" #t) ed evt))))
 
 ; c:(
 ; insert ( or () depending on preferences
