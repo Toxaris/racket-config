@@ -7,7 +7,7 @@ Installation
 ------------
 
 In DrRacket, select &ldquo;Edit&rdquo; | &ldquo;Keybindings&rdquo; | &ldquo;Add user-defined keybindings&hellip;&rdquo; from
-the menu and select they `keybindings.rkt` file.
+the menu and select the `keybindings.rkt` file.
 
 Bindings
 --------
